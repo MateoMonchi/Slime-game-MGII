@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerControler : MonoBehaviour
 {
     public LayerMask SolidObjectsLayer;
+    public LayerMask LongGrassLayer;
     public float moveSpeed = 5f;
     private bool isMoving;
     private Vector2 input;
@@ -37,6 +38,7 @@ public class PlayerControler : MonoBehaviour
         }
         transform.position = targetPos;
         isMoving = false;
+        CheckForEncountres();
     }
     private bool IsWalkAble(Vector3 targetPos)
     {
@@ -45,6 +47,16 @@ public class PlayerControler : MonoBehaviour
             return false;
         }
         return true;
+    }
+    private void CheckForEncountres()
+    {
+        if(Physics2D.OverlapCircle(transform.position, 0.2f, LongGrassLayer) != null)
+        {
+            if(Random.Range(1, 101) <= 10)
+            {
+                Debug.Log("Aparecio un enemigo");
+            }
+        }
     }
 }
 
