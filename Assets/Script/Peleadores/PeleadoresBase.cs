@@ -28,6 +28,14 @@ public class PeleadoresBase : ScriptableObject
     {
         get { return description; }
     }
+    public Sprite BackSprite
+    {
+        get { return backSprite; }
+    }
+    public Sprite FrontSprite
+    {
+        get { return frontSprite; }
+    }
     public int MaxHp
     {
         get { return maxHp; }
