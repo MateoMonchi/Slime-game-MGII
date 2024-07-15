@@ -16,6 +16,8 @@ MonoBehaviour:
   description: 
   frontSprite: {fileID: 1729007479, guid: 7f399365f92c3bb40a0c73622bb64c8d, type: 3}
   backSprite: {fileID: 1729007479, guid: 7f399365f92c3bb40a0c73622bb64c8d, type: 3}
+  clase1: 9
+  clase2: 0
   maxHp: 26
   attack: 49
   defense: 25

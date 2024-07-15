@@ -9,6 +9,7 @@ public class MovimientosBase : ScriptableObject
 
     [TextArea]
     [SerializeField] string description;
+    [SerializeField] PeleadorClase clase;
     [SerializeField] int poder;
     [SerializeField] int precision;
     [SerializeField] int pp;
@@ -21,6 +22,10 @@ public class MovimientosBase : ScriptableObject
     public string Description
     {
         get { return description; }
+    }
+    public PeleadorClase Clase
+    {
+        get { return clase; }
     }
     public int Precision
     {

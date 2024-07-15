@@ -12,6 +12,9 @@ public class PeleadoresBase : ScriptableObject
     [SerializeField] Sprite frontSprite;
     [SerializeField] Sprite backSprite;
 
+    [SerializeField] PeleadorClase clase1;
+    [SerializeField] PeleadorClase clase2;
+
     //Stats Bases
     [SerializeField] int maxHp;
     [SerializeField] int attack;
@@ -27,6 +30,14 @@ public class PeleadoresBase : ScriptableObject
     public string Description
     {
         get { return description; }
+    }
+    public PeleadorClase Clase1
+    {
+        get { return clase1; }
+    }
+    public PeleadorClase Clase2
+    {
+        get { return clase2; }
     }
     public Sprite BackSprite
     {
@@ -80,4 +91,17 @@ public class AprenderMovimientos
     {
         get { return level; }
     }
+}
+public enum PeleadorClase
+{
+    None,
+    GoodMagic,
+    EvilMagic,
+    Monster,
+    Warrior,
+    Healing,
+    Archer,
+    Swordsman,
+    Thief,
+    Bug
 }

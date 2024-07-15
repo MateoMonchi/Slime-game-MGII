@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Corte
   description: 
+  clase: 7
   poder: 60
   precision: 100
   pp: 20

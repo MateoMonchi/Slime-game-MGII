@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Picotazo
   description: 
+  clase: 9
   poder: 50
   precision: 100
   pp: 20
-  aprenderMovimientos: []
