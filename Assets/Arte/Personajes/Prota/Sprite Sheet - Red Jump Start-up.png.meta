@@ -113,12 +113,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 27
         y: 0
-        width: 72
-        height: 32
+        width: 43
+        height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_1
       rect:
         serializedVersion: 2
-        x: 100
+        x: 124
         y: 0
-        width: 91
-        height: 32
+        width: 40
+        height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -155,12 +155,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_2
       rect:
         serializedVersion: 2
-        x: 207
+        x: 217
         y: 0
-        width: 66
-        height: 32
+        width: 42
+        height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -176,12 +176,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_3
       rect:
         serializedVersion: 2
-        x: 302
+        x: 310
         y: 0
-        width: 73
-        height: 32
+        width: 45
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -199,10 +199,10 @@ TextureImporter:
         serializedVersion: 2
         x: 403
         y: 0
-        width: 65
-        height: 32
+        width: 47
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -218,12 +218,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_5
       rect:
         serializedVersion: 2
-        x: 493
+        x: 500
         y: 0
-        width: 73
-        height: 32
+        width: 45
+        height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -239,12 +239,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_6
       rect:
         serializedVersion: 2
-        x: 587
+        x: 597
         y: 0
-        width: 80
-        height: 32
+        width: 46
+        height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -260,12 +260,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_7
       rect:
         serializedVersion: 2
-        x: 689
+        x: 691
         y: 0
-        width: 70
-        height: 32
+        width: 47
+        height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -281,12 +281,12 @@ TextureImporter:
       name: Sprite Sheet - Red Jump Start-up_8
       rect:
         serializedVersion: 2
-        x: 782
+        x: 796
         y: 0
-        width: 62
-        height: 31
+        width: 37
+        height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
