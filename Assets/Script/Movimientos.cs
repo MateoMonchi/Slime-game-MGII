@@ -7,9 +7,9 @@ public class Movimientos
    public MovimientosBase Base { get; set; }
     public int PP { get; set; }
 
-    public Movimientos(MovimientosBase pBase, int pp)
+    public Movimientos(MovimientosBase pBase)
     {
         Base = pBase;
-        PP = pp;
+        PP = pBase.PP;
     }
 }

@@ -13,7 +13,7 @@ public class MovimientosBase : ScriptableObject
     [SerializeField] int precision;
     [SerializeField] int pp;
 
-    [SerializeField] List<AprenderMovimientos> aprenderMovimientos;
+   
     public string Name
     {
         get { return name; }
@@ -34,24 +34,6 @@ public class MovimientosBase : ScriptableObject
     {
         get { return pp; }
     }
-    public List<AprenderMovimientos> aprendermovimientos
-    {
-        get { return aprenderMovimientos; }
-    }
-
-    [System.Serializable]
-    public class AprenderMovimientos
-    {
-        [SerializeField] MovimientosBase movimientosBase;
-        [SerializeField] int level;
-
-        public MovimientosBase Base
-        {
-            get { return movimientosBase; }
-        }
-        public int Level
-        {
-            get { return level; }
-        }
-    }
+   
 }
+

@@ -1,16 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Peleadores
 {
     PeleadoresBase _base;
     int level;
+    public int HP { get;set; }
+    public List<Movimientos> Movimientos { get; set; }
 
     public Peleadores(PeleadoresBase pBase, int plevel)
     {
         _base = pBase;
         level = plevel;
+        HP = _base.MaxHp;
+       
+        //Genera movimientos
+        Movimientos = new List<Movimientos>();
+        foreach(var movimiento in _base.Aprendermovimientos)
+        {
+            if (movimiento.Level <= level)
+                Movimientos.Add(new Movimientos(movimiento.Base));
+
+            if (Movimientos.Count >= 4)
+                break;
+        }
     }
     public int Attack
     {

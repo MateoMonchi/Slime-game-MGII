@@ -19,7 +19,7 @@ public class PeleadoresBase : ScriptableObject
     [SerializeField] int magicAttack;
     [SerializeField] int magicDefense;
     [SerializeField] int speed;
-   
+    [SerializeField] List<AprenderMovimientos> aprenderMovimientos;
     public string Name
     {
         get { return name; }
@@ -51,5 +51,25 @@ public class PeleadoresBase : ScriptableObject
     public int Speed
     {
         get { return speed; }
+    }
+    public List<AprenderMovimientos> Aprendermovimientos
+    {
+        get { return aprenderMovimientos; }
+    }
+}
+[System.Serializable]
+
+public class AprenderMovimientos
+{
+    [SerializeField] MovimientosBase movimientosBase;
+    [SerializeField] int level;
+
+    public MovimientosBase Base
+    {
+        get { return movimientosBase; }
+    }
+    public int Level
+    {
+        get { return level; }
     }
 }
