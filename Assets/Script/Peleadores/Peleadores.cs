@@ -51,4 +51,25 @@ public class Peleadores
     {
         get { return Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5; }
     }
+    
+    public bool TakeDamage(Movimientos movimiento, Peleadores agresor)
+    {
+        float modifiers = Random.Range(0.85f, 1f);
+        float a = (2 * agresor.Level + 10) / 250f;
+        float d = a * movimiento.Base.Poder * ((float)agresor.Attack / Defense) + 2;
+        int damage = Mathf.FloorToInt(d * modifiers);
+
+        HP -= damage;
+        if(HP <= 0)
+        {
+            HP = 0;
+            return true;
+        }
+        return false;
+    }
+    public Movimientos GetRandomMove()
+    {
+        int r = Random.Range(0, Movimientos.Count);
+        return Movimientos[r];
+    }
 }

@@ -17,6 +17,6 @@ public class BattleUnit : MonoBehaviour
             GetComponent<Image>().sprite = Peleadores.Base.BackSprite;
         else
             GetComponent<Image>().sprite = Peleadores.Base.FrontSprite;
-
+       
     }
 }

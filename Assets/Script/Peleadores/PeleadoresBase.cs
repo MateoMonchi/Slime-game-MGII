@@ -103,5 +103,6 @@ public enum PeleadorClase
     Archer,
     Swordsman,
     Thief,
-    Bug
+    Bug,
+    Machine
 }
