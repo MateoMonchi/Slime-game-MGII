@@ -26,9 +26,9 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SetUpBattle()
     {
-        playerUnit.Setup();
+        //playerUnit.Setup();
         playerHud.SetData(playerUnit.Peleadores);
-        enemyUnit.Setup();
+        //enemyUnit.Setup();
         enemyHud.SetData(enemyUnit.Peleadores);
 
         dialogBox.SetMoveNames(playerUnit.Peleadores.Movimientos);
@@ -57,6 +57,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Busy;
 
         var movimiento = playerUnit.Peleadores.Movimientos[currentMove];
+        movimiento.PP--;
         yield return dialogBox.TypeDialog($"{playerUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
         yield return new WaitForSeconds(1f);
         var damageDetails = enemyUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);
@@ -79,6 +80,7 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.EnemyMove;
         var movimiento = enemyUnit.Peleadores.GetRandomMove();
+        movimiento.PP--;
         yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
         yield return new WaitForSeconds(1f);
         var damageDetails = playerUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);

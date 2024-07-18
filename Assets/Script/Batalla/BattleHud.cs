@@ -10,6 +10,8 @@ public class BattleHud : MonoBehaviour
     [SerializeField] HpBar HPBar;
 
     Peleadores _peleadores;
+    
+
     public void SetData(Peleadores peleadores)
     {
         _peleadores = peleadores;

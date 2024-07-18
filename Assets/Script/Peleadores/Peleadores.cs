@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using UnityEditor.Timeline;
 using UnityEngine;
 
+[System.Serializable]
+
 public class Peleadores
 {
-    public PeleadoresBase Base {get; set;}
-    public int Level { get; set; }
+    [SerializeField] PeleadoresBase _base;
+    [SerializeField] int level;
+
+    public PeleadoresBase Base
+    { get { return _base; } }
+            
+    public int Level
+    {
+
+        get { return level; }
+    }
+
     public int HP { get;set; }
     public List<Movimiento> Movimientos { get; set; }
 
-    public Peleadores(PeleadoresBase pBase, int plevel)
+    public void Init()
     {
-        Base = pBase;
-        Level = plevel;
+       
         HP = MaxHp;
        
         //Genera movimientos
@@ -66,9 +77,11 @@ public class Peleadores
             Critico = critico,
             Perecer = false
         };
+        float ataque = (movimiento.Base.IsSpecial) ? agresor.MagicAttack : agresor.Attack;
+        float defensa = (movimiento.Base.IsSpecial) ? MagicDefense : Defense;
         float modifiers = Random.Range(0.85f, 1f) * Clase * critico;
         float a = (2 * agresor.Level + 10) / 250f;
-        float d = a * movimiento.Base.Poder * ((float)agresor.Attack / Defense) + 2;
+        float d = a * movimiento.Base.Poder * ((float)ataque / defensa) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
 
         HP -= damage;

@@ -14,7 +14,7 @@ public class MovimientosBase : ScriptableObject
     [SerializeField] int precision;
     [SerializeField] int pp;
 
-   
+
     public string Name
     {
         get { return name; }
@@ -39,6 +39,22 @@ public class MovimientosBase : ScriptableObject
     {
         get { return pp; }
     }
-   
+
+    public bool IsSpecial
+    {
+        get
+        {
+            if (clase == PeleadorClase.Fuego || clase == PeleadorClase.Viento || clase == PeleadorClase.Agua || clase == PeleadorClase.Rayo)
+            {
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+    }
 }
 

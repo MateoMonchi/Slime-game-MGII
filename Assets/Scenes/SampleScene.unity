@@ -1102,6 +1102,7 @@ GameObject:
   - component: {fileID: 617128652}
   - component: {fileID: 617128651}
   - component: {fileID: 617128653}
+  - component: {fileID: 617128654}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1196,6 +1197,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   moveSpeed: 5
+--- !u!114 &617128654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617128650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188cce924c4aaca44acc54e78c8c96be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  peleads:
+  - _base: {fileID: 11400000, guid: d2e9817ea28aeb045858c229e454ad2d, type: 2}
+    level: 7
+  - _base: {fileID: 11400000, guid: 234746604bb7e1740a62a30447bac4d2, type: 2}
+    level: 7
 --- !u!1 &663709116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,8 +1302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde608d460bd9f6449f74410dcba0e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _base: {fileID: 11400000, guid: d2e9817ea28aeb045858c229e454ad2d, type: 2}
-  level: 7
   isPlayerUnit: 1
 --- !u!1 &785636648
 GameObject:
@@ -1347,6 +1363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feeee1d5ad45d714c95f3e5f80c989c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  peleadoresDeArea: []
 --- !u!1 &1084709720
 GameObject:
   m_ObjectHideFlags: 0
@@ -13940,7 +13957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: {fileID: 2131954559}
-  lettersPerSecond: 30
+  lettersPerSecond: 25
   highlightedColor: {r: 0, g: 0.36917162, b: 1, a: 1}
   actionSelector: {fileID: 1490321490}
   moveSelector: {fileID: 508944308}
@@ -14173,8 +14190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde608d460bd9f6449f74410dcba0e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _base: {fileID: 11400000, guid: f34c4339091254347a6e670a2288cde4, type: 2}
-  level: 5
   isPlayerUnit: 0
 --- !u!1 &2130397627
 GameObject:

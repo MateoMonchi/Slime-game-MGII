@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class BattleUnit : MonoBehaviour
 {
-    [SerializeField] PeleadoresBase _base;
-    [SerializeField] int level;
+   
     [SerializeField] bool isPlayerUnit;
 
     public Peleadores Peleadores { get; set; }
-    public void Setup()
+    public void Setup(Peleadores peleador)
     {
-        Peleadores = new Peleadores(_base, level);
+        Peleadores = peleador;
         if (isPlayerUnit)
             GetComponent<Image>().sprite = Peleadores.Base.BackSprite;
         else
