@@ -17,7 +17,7 @@ MonoBehaviour:
   frontSprite: {fileID: 543890252, guid: b529e66fd4f7d974886e253c8442b50b, type: 3}
   backSprite: {fileID: 543890252, guid: b529e66fd4f7d974886e253c8442b50b, type: 3}
   clase1: 3
-  clase2: 0
+  clase2: 2
   maxHp: 50
   attack: 45
   defense: 60
@@ -31,3 +31,5 @@ MonoBehaviour:
     level: 2
   - movimientosBase: {fileID: 11400000, guid: bf4b1fcd0f10a62498353d1a5ce87f0b, type: 2}
     level: 7
+  - movimientosBase: {fileID: 11400000, guid: c7210e73ac18e8645a02fcf0d7d50136, type: 2}
+    level: 10

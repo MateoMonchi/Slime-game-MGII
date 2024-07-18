@@ -95,14 +95,34 @@ public class AprenderMovimientos
 public enum PeleadorClase
 {
     None,
-    GoodMagic,
-    EvilMagic,
-    Monster,
-    Warrior,
-    Healing,
-    Archer,
-    Swordsman,
-    Thief,
-    Bug,
-    Machine
+    Normal,
+    Fuego,
+    Agua,
+    Rayo,
+    Tierra,
+    Viento,
+    Maquina
+}
+public class ClaseChart
+{
+    static float[][] chart =
+    {
+        //                   NOR  FIR   WAT   ELE   GRO   WIN   MAQ
+        /*NOR*/ new float[] {1f,  1f,   1f,   1f,   1f,   1f,   0.5f},
+        /*FIR*/ new float[] {1f,  0.5f, 0.5f, 1f,   2f,   1f,   1f},
+        /*WAT*/ new float[] {1f,  2f,   0.5f, 1f,   0.5f, 1f,   1f},
+        /*ELE*/ new float[] {1f,  1f,   1f,   0.5f, 2f,   0.5f, 0.5f},
+        /*GRO*/ new float[] {1f,  1f,   2f,   0.5f, 0.5f, 1f,   0.5f},
+        /*WIN*/ new float[] {1f,  0.5f, 1f,   2f,   1f,   0.5f, 1f},
+        /*MAQ*/ new float[] {1f,  1f,   2f,   1f,   0.5f, 2f,   1f},
+    };
+
+    public static float GetEffectiveness(PeleadorClase attackType, PeleadorClase defenseType)
+    {
+        if (attackType == PeleadorClase.None || defenseType == PeleadorClase.None)
+            return 1;
+        int row = (int)attackType - 1;
+        int col = (int)defenseType - 1;
+        return chart[row][col];
+    }
 }

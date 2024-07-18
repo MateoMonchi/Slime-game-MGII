@@ -59,9 +59,10 @@ public class BattleSystem : MonoBehaviour
         var movimiento = playerUnit.Peleadores.Movimientos[currentMove];
         yield return dialogBox.TypeDialog($"{playerUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
         yield return new WaitForSeconds(1f);
-        bool isFainted = enemyUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);
+        var damageDetails = enemyUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);
         yield return enemyHud.UpdateHP();
-        if(isFainted)
+        yield return ShowDamageDetails(damageDetails);
+        if(damageDetails.Perecer)
         {
             yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} Perecio");
 
@@ -80,10 +81,11 @@ public class BattleSystem : MonoBehaviour
         var movimiento = enemyUnit.Peleadores.GetRandomMove();
         yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
         yield return new WaitForSeconds(1f);
-        bool isFainted = playerUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);
+        var damageDetails = playerUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);
        yield return playerHud.UpdateHP();
+        yield return ShowDamageDetails(damageDetails);
 
-        if (isFainted)
+        if (damageDetails.Perecer)
         {
             yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} Perecio");
 
@@ -94,6 +96,16 @@ public class BattleSystem : MonoBehaviour
         {
             PlayerAction();
         }
+    }
+
+    IEnumerator ShowDamageDetails(DamageDetails damageDetails)
+    {
+        if (damageDetails.Critico > 1f)
+            yield return dialogBox.TypeDialog("Black Flash");
+        if (damageDetails.EfectividadesDeClases > 1f)
+            yield return dialogBox.TypeDialog("Pego SuperEfectivo");
+        else if (damageDetails.EfectividadesDeClases < 1f)
+            yield return dialogBox.TypeDialog("No fue Efectivo");
     }
 
     public void HandleUpdate()

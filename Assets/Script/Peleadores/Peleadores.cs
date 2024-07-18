@@ -8,7 +8,7 @@ public class Peleadores
     public PeleadoresBase Base {get; set;}
     public int Level { get; set; }
     public int HP { get;set; }
-    public List<Movimientos> Movimientos { get; set; }
+    public List<Movimiento> Movimientos { get; set; }
 
     public Peleadores(PeleadoresBase pBase, int plevel)
     {
@@ -17,11 +17,11 @@ public class Peleadores
         HP = MaxHp;
        
         //Genera movimientos
-        Movimientos = new List<Movimientos>();
+        Movimientos = new List<Movimiento>();
         foreach(var movimiento in Base.Aprendermovimientos)
         {
             if (movimiento.Level <= Level)
-                Movimientos.Add(new Movimientos(movimiento.Base));
+                Movimientos.Add(new Movimiento(movimiento.Base));
 
             if (Movimientos.Count >= 4)
                 break;
@@ -52,9 +52,21 @@ public class Peleadores
         get { return Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5; }
     }
     
-    public bool TakeDamage(Movimientos movimiento, Peleadores agresor)
+    public DamageDetails TakeDamage(Movimiento movimiento, Peleadores agresor)
     {
-        float modifiers = Random.Range(0.85f, 1f);
+        float critico = 1f;
+        if (Random.value * 100f <= 6.25f)
+            critico = 2f;
+
+        float Clase = ClaseChart.GetEffectiveness(movimiento.Base.Clase, this.Base.Clase1) * ClaseChart.GetEffectiveness(movimiento.Base.Clase, this.Base.Clase2);
+
+        var damageDetails = new DamageDetails()
+        {
+            EfectividadesDeClases = Clase,
+            Critico = critico,
+            Perecer = false
+        };
+        float modifiers = Random.Range(0.85f, 1f) * Clase * critico;
         float a = (2 * agresor.Level + 10) / 250f;
         float d = a * movimiento.Base.Poder * ((float)agresor.Attack / Defense) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
@@ -63,13 +75,20 @@ public class Peleadores
         if(HP <= 0)
         {
             HP = 0;
-            return true;
+            damageDetails.Perecer = true;
         }
-        return false;
+        return damageDetails;
     }
-    public Movimientos GetRandomMove()
+    public Movimiento GetRandomMove()
     {
         int r = Random.Range(0, Movimientos.Count);
         return Movimientos[r];
     }
+}
+public class DamageDetails
+{
+    public bool Perecer { get; set;} 
+    public float Critico { get; set;}
+    public float EfectividadesDeClases { get; set;}
+
 }
