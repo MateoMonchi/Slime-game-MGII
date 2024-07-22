@@ -109,10 +109,10 @@ public class ClaseChart
     {
         //                   NOR  FIR   WAT   ELE   GRO   WIN   MAQ
         /*NOR*/ new float[] {1f,  1f,   1f,   1f,   1f,   1f,   0.5f},
-        /*FIR*/ new float[] {1f,  0.5f, 0.5f, 1f,   2f,   1f,   1f},
-        /*WAT*/ new float[] {1f,  2f,   0.5f, 1f,   0.5f, 1f,   1f},
-        /*ELE*/ new float[] {1f,  1f,   1f,   0.5f, 2f,   0.5f, 0.5f},
-        /*GRO*/ new float[] {1f,  1f,   2f,   0.5f, 0.5f, 1f,   0.5f},
+        /*FIR*/ new float[] {1f,  0.5f, 0.5f, 1f,   2f,   2f,   1f},
+        /*WAT*/ new float[] {1f,  2f,   0.5f, 0.5f,  2f, 1f,   1f},
+        /*ELE*/ new float[] {1f,  1f,   2f,   0.5f, 0.5f,   2f, 0.5f},
+        /*GRO*/ new float[] {1f,  2f,   1f,   2f, 0.5f, 1f,   0.5f},
         /*WIN*/ new float[] {1f,  0.5f, 1f,   2f,   1f,   0.5f, 1f},
         /*MAQ*/ new float[] {1f,  1f,   2f,   1f,   0.5f, 2f,   1f},
     };

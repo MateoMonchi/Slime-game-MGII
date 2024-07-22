@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class MapArea : MonoBehaviour
 {
-    [SerializeField] List<Peleadores> peleadoresDeArea;
-
-    public Peleadores GetRandomPeleadoresDeArea()
+    [SerializeField] List<Peleadores> peleadoresMalos;
+    public Peleadores GetRandomPeleadoresMalos()
     {
-        return peleadoresDeArea[Random.Range(0, peleadoresDeArea.Count)];
+        var peleadoreMalo = peleadoresMalos[Random.Range(0, peleadoresMalos.Count)];
+        peleadoreMalo.Init();
+        return peleadoreMalo;
     }
 }

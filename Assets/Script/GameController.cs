@@ -22,7 +22,11 @@ public class GameController : MonoBehaviour
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
-        battleSystem.StartBattle();
+
+        var partyPeleadores = playerController.GetComponent<PartyPeleadores>();
+        var peleadoresMalos = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomPeleadoresMalos();
+
+        battleSystem.StartBattle(partyPeleadores, peleadoresMalos);
     }
 
     void EndBattle(bool ganar)

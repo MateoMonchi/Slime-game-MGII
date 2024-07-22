@@ -13,23 +13,32 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleHud enemyHud;
     [SerializeField] BattleDialogeBox dialogBox;
+    [SerializeField] PartyScreen partyScreen;
 
     public event Action<bool> OnBattleOver;
 
     BattleState state;
     int currentAction;
     int currentMove;
-    public void StartBattle()
+
+    PartyPeleadores partyPeleador;
+    Peleadores peleadorMalo;
+
+    public void StartBattle(PartyPeleadores partyPeleador, Peleadores peleleadorMalo)
     {
+        this.partyPeleador = partyPeleador;
+        this.peleadorMalo = peleleadorMalo;
         StartCoroutine(SetUpBattle());
     }
 
     public IEnumerator SetUpBattle()
     {
-        //playerUnit.Setup();
+        playerUnit.Setup(partyPeleador.GetHealyPeleadores());
         playerHud.SetData(playerUnit.Peleadores);
-        //enemyUnit.Setup();
+        enemyUnit.Setup(peleadorMalo);
         enemyHud.SetData(enemyUnit.Peleadores);
+
+        partyScreen.Init();
 
         dialogBox.SetMoveNames(playerUnit.Peleadores.Movimientos);
 
@@ -41,9 +50,16 @@ public class BattleSystem : MonoBehaviour
     void PlayerAction()
     {
         state = BattleState.PlayerAction;
-        StartCoroutine(dialogBox.TypeDialog("Elige una acción"));
+        dialogBox.SetDialog("Elige una acción");
         dialogBox.EnableActionSelector(true);
     }
+
+    void OpenPartyScreen()
+    {
+        partyScreen.SetPartyData(partyPeleador.peleadores);
+        partyScreen.gameObject.SetActive(true);
+    }
+
     void PlayerMove()
     {
         state = BattleState.PlayerMove;
@@ -92,7 +108,25 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} Perecio");
 
             yield return new WaitForSeconds(2f);
-            OnBattleOver(false);
+
+            var proximoPeleador = partyPeleador.GetHealyPeleadores();
+            if( proximoPeleador != null )
+            {
+
+                playerUnit.Setup(proximoPeleador);
+                playerHud.SetData(proximoPeleador);
+
+                dialogBox.SetMoveNames(proximoPeleador.Movimientos);
+
+                yield return dialogBox.TypeDialog($"Encargate {proximoPeleador.Base.Name}!");
+            
+
+                PlayerAction();
+            }
+            else
+            {
+                OnBattleOver(false);
+            }
         }
         else
         {
@@ -124,17 +158,19 @@ public class BattleSystem : MonoBehaviour
 
     void HandleActionSelector()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (currentAction < 1)
-                ++currentAction;
-        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            ++currentAction;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            --currentAction;
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            currentAction += 2;
         else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (currentAction > 0)
-                --currentAction;
-        }
-        dialogBox.UpdateActionSelection(currentAction);
+            currentAction -= 2;
+
+        currentAction = Mathf.Clamp(currentAction, 0, 3);
+
+            dialogBox.UpdateActionSelection(currentAction);
+        
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (currentAction == 0)
@@ -144,6 +180,15 @@ public class BattleSystem : MonoBehaviour
             }
             else if (currentAction == 1)
             {
+                //Mochila
+            }
+            else if (currentAction == 2)
+            {
+                //Peleadores
+                OpenPartyScreen();
+            }
+            else if (currentAction == 3)
+            {
                 //Correr
             }
         }
@@ -152,31 +197,28 @@ public class BattleSystem : MonoBehaviour
     void HandleMoveSelection()
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (currentMove < playerUnit.Peleadores.Movimientos.Count - 1)
-                ++currentMove;
-        }
+            ++currentMove;
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (currentMove > 0)
-                --currentMove;
-        }
-       else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (currentMove < playerUnit.Peleadores.Movimientos.Count - 2)
-                currentMove += 2; 
-        }
+            --currentMove;
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            currentMove += 2;
         else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (currentAction > 1)
-                currentMove -= 2;
-        }
+            currentMove -= 2;
+
+        currentMove = Mathf.Clamp(currentMove, 0, playerUnit.Peleadores.Movimientos.Count - 1);
+
         dialogBox.UpdateMoveSelection(currentMove, playerUnit.Peleadores.Movimientos[currentMove]);
         if (Input.GetKeyDown(KeyCode.Z))
         {
             dialogBox.EnableMoveSelector(false);
             dialogBox.EnableDialogText(true);
             StartCoroutine(PerformPlayerMove());
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            dialogBox.EnableMoveSelector(false);
+            dialogBox.EnableDialogText(true);
+            PlayerAction();
         }
     }
 }
