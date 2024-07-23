@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 
-public enum BattleState { Start,PlayerAction, PlayerMove,EnemyMove,Busy, PartyScreen}
+public enum BattleState { Start,ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, BattleOver}
 public class BattleSystem : MonoBehaviour
 {
 
     [SerializeField] BattleUnit playerUnit;
-    [SerializeField] BattleHud playerHud;
     [SerializeField] BattleUnit enemyUnit;
-    [SerializeField] BattleHud enemyHud;
     [SerializeField] BattleDialogeBox dialogBox;
     [SerializeField] PartyScreen partyScreen;
 
@@ -35,9 +33,7 @@ public class BattleSystem : MonoBehaviour
     public IEnumerator SetUpBattle()
     {
         playerUnit.Setup(partyPeleador.GetHealyPeleadores());
-        playerHud.SetData(playerUnit.Peleadores);
         enemyUnit.Setup(peleadorMalo);
-        enemyHud.SetData(enemyUnit.Peleadores);
 
         partyScreen.Init();
 
@@ -48,9 +44,16 @@ public class BattleSystem : MonoBehaviour
 
         ActionSelection();
     }
+
+    void BattleOver(bool won)
+    {
+        state = BattleState.BattleOver;
+        OnBattleOver(won);
+    }
+
     void ActionSelection()
     {
-        state = BattleState.PlayerAction;
+        state = BattleState.ActionSelection;
         dialogBox.SetDialog("Elige una acción");
         dialogBox.EnableActionSelector(true);
     }
@@ -64,7 +67,7 @@ public class BattleSystem : MonoBehaviour
 
     void MoveSelection()
     {
-        state = BattleState.PlayerMove;
+        state = BattleState.MoveSelection;
         dialogBox.EnableActionSelector(false);
         dialogBox.EnableDialogText(false);
         dialogBox.EnableMoveSelector(true);
@@ -72,59 +75,57 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerMove()
     {
-        state = BattleState.Busy;
+        state = BattleState.PerformMove;
 
         var movimiento = playerUnit.Peleadores.Movimientos[currentMove];
-        movimiento.PP--;
-        yield return dialogBox.TypeDialog($"{playerUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
-        yield return new WaitForSeconds(1f);
-        var damageDetails = enemyUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);
-        yield return enemyHud.UpdateHP();
-        yield return ShowDamageDetails(damageDetails);
-        if(damageDetails.Perecer)
-        {
-            yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} Perecio");
+        yield return RunMove(playerUnit, enemyUnit, movimiento);
 
-            yield return new WaitForSeconds(2f);
-            OnBattleOver(true);
-        }
-        else
-        {
+        if(state == BattleState.PerformMove)
             StartCoroutine(EnemyMove());
-        }
     }
 
     IEnumerator EnemyMove()
     {
-        state = BattleState.EnemyMove;
+        state = BattleState.PerformMove;
         var movimiento = enemyUnit.Peleadores.GetRandomMove();
+        yield return RunMove(enemyUnit, playerUnit, movimiento);
+       
+        if(state == BattleState.PerformMove)
+            ActionSelection();
+        
+    }
+
+    IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Movimiento movimiento)
+    {
         movimiento.PP--;
-        yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
+        yield return dialogBox.TypeDialog($"{sourceUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
         yield return new WaitForSeconds(1f);
-        var damageDetails = playerUnit.Peleadores.TakeDamage(movimiento, playerUnit.Peleadores);
-       yield return playerHud.UpdateHP();
+        var damageDetails = targetUnit.Peleadores.TakeDamage(movimiento, sourceUnit.Peleadores);
+        yield return targetUnit.Hud.UpdateHP();
         yield return ShowDamageDetails(damageDetails);
 
         if (damageDetails.Perecer)
         {
-            yield return dialogBox.TypeDialog($"{enemyUnit.Peleadores.Base.Name} Perecio");
+            yield return dialogBox.TypeDialog($"{targetUnit.Peleadores.Base.Name} Perecio");
 
             yield return new WaitForSeconds(2f);
 
+            CheckForBattleOver(targetUnit);
+        }
+    }
+
+    void CheckForBattleOver(BattleUnit faintedUnit)
+    {
+        if (faintedUnit.IsPlayerUnit)
+        {
             var proximoPeleador = partyPeleador.GetHealyPeleadores();
-            if( proximoPeleador != null )
-            {
+            if (proximoPeleador != null)
                 OpenPartyScreen();
-            }
             else
-            {
-                OnBattleOver(false);
-            }
+                BattleOver(false);
         }
         else
-        {
-            ActionSelection();
-        }
+            BattleOver(true);
     }
 
     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
@@ -139,11 +140,11 @@ public class BattleSystem : MonoBehaviour
 
     public void HandleUpdate()
     {
-        if (state == BattleState.PlayerAction)
+        if (state == BattleState.ActionSelection)
         {
             HandleActionSelector();
         }
-        else if (state == BattleState.PlayerMove)
+        else if (state == BattleState.MoveSelection)
         {
             HandleMoveSelection();
         }
@@ -266,7 +267,6 @@ public class BattleSystem : MonoBehaviour
         }
 
         playerUnit.Setup(nuevoPeleador);
-        playerHud.SetData(nuevoPeleador);
         dialogBox.SetMoveNames(nuevoPeleador.Movimientos);
         yield return dialogBox.TypeDialog($"Encargate {nuevoPeleador.Base.Name}!");
 

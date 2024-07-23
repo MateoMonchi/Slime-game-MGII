@@ -20,9 +20,9 @@ MonoBehaviour:
   clase2: 2
   maxHp: 50
   attack: 45
-  defense: 60
-  magicAttack: 46
-  magicDefense: 60
+  defense: 65
+  magicAttack: 50
+  magicDefense: 65
   speed: 40
   aprenderMovimientos:
   - movimientosBase: {fileID: 11400000, guid: fb0c73f12587a5b4fb0a792139a047b9, type: 2}
