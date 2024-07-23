@@ -1280,6 +1280,10 @@ MonoBehaviour:
     level: 7
   - _base: {fileID: 11400000, guid: 234746604bb7e1740a62a30447bac4d2, type: 2}
     level: 7
+  - _base: {fileID: 11400000, guid: defe404029055ae43925668ad5e4baf4, type: 2}
+    level: 7
+  - _base: {fileID: 11400000, guid: f34c4339091254347a6e670a2288cde4, type: 2}
+    level: 7
 --- !u!1 &663709116
 GameObject:
   m_ObjectHideFlags: 0

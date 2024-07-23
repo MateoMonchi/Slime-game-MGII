@@ -101,7 +101,8 @@ public enum PeleadorClase
     Rayo,
     Tierra,
     Viento,
-    Maquina
+    Maquina,
+    Hielo
 }
 public class ClaseChart
 {
@@ -115,6 +116,7 @@ public class ClaseChart
         /*GRO*/ new float[] {1f,  2f,   1f,   2f, 0.5f, 1f,   0.5f},
         /*WIN*/ new float[] {1f,  0.5f, 1f,   2f,   1f,   0.5f, 1f},
         /*MAQ*/ new float[] {1f,  1f,   2f,   1f,   0.5f, 2f,   1f},
+        /*ICE*/ new float[] {1f,  0.5f,   2f,   1f,   1f, 2f,   1f},
     };
 
     public static float GetEffectiveness(PeleadorClase attackType, PeleadorClase defenseType)

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Incha
   description: 
-  clase: 1
+  clase: 2
   poder: 0
   precision: 100
   pp: 20

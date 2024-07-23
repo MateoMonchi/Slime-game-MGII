@@ -15,6 +15,6 @@ MonoBehaviour:
   name: Salto
   description: 
   clase: 6
-  poder: 65
+  poder: 55
   precision: 95
   pp: 20

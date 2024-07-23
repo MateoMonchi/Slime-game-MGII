@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 
-public enum BattleState { Start,PlayerAction, PlayerMove,EnemyMove,Busy}
+public enum BattleState { Start,PlayerAction, PlayerMove,EnemyMove,Busy, PartyScreen}
 public class BattleSystem : MonoBehaviour
 {
 
@@ -20,6 +20,7 @@ public class BattleSystem : MonoBehaviour
     BattleState state;
     int currentAction;
     int currentMove;
+    int currentMember;
 
     PartyPeleadores partyPeleador;
     Peleadores peleadorMalo;
@@ -45,9 +46,9 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"Aparecio un {enemyUnit.Peleadores.Base.Name}");
         yield return new WaitForSeconds(1f);
 
-        PlayerAction();
+        ActionSelection();
     }
-    void PlayerAction()
+    void ActionSelection()
     {
         state = BattleState.PlayerAction;
         dialogBox.SetDialog("Elige una acción");
@@ -56,11 +57,12 @@ public class BattleSystem : MonoBehaviour
 
     void OpenPartyScreen()
     {
+        state = BattleState.PartyScreen;
         partyScreen.SetPartyData(partyPeleador.peleadores);
         partyScreen.gameObject.SetActive(true);
     }
 
-    void PlayerMove()
+    void MoveSelection()
     {
         state = BattleState.PlayerMove;
         dialogBox.EnableActionSelector(false);
@@ -68,7 +70,7 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableMoveSelector(true);
     }
 
-    IEnumerator PerformPlayerMove()
+    IEnumerator PlayerMove()
     {
         state = BattleState.Busy;
 
@@ -112,16 +114,7 @@ public class BattleSystem : MonoBehaviour
             var proximoPeleador = partyPeleador.GetHealyPeleadores();
             if( proximoPeleador != null )
             {
-
-                playerUnit.Setup(proximoPeleador);
-                playerHud.SetData(proximoPeleador);
-
-                dialogBox.SetMoveNames(proximoPeleador.Movimientos);
-
-                yield return dialogBox.TypeDialog($"Encargate {proximoPeleador.Base.Name}!");
-            
-
-                PlayerAction();
+                OpenPartyScreen();
             }
             else
             {
@@ -130,7 +123,7 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            PlayerAction();
+            ActionSelection();
         }
     }
 
@@ -154,6 +147,10 @@ public class BattleSystem : MonoBehaviour
         {
             HandleMoveSelection();
         }
+        else if (state == BattleState.PartyScreen)
+        {
+            HandlePartySelector();
+        }
     }
 
     void HandleActionSelector()
@@ -176,7 +173,7 @@ public class BattleSystem : MonoBehaviour
             if (currentAction == 0)
             {
                 //Pelear
-                PlayerMove();
+                MoveSelection();
             }
             else if (currentAction == 1)
             {
@@ -212,13 +209,67 @@ public class BattleSystem : MonoBehaviour
         {
             dialogBox.EnableMoveSelector(false);
             dialogBox.EnableDialogText(true);
-            StartCoroutine(PerformPlayerMove());
+            StartCoroutine(PlayerMove());
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
             dialogBox.EnableMoveSelector(false);
             dialogBox.EnableDialogText(true);
-            PlayerAction();
+            ActionSelection();
         }
+    }
+    void HandlePartySelector()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            ++currentMember;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            --currentMember;
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            currentMember += 2;
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+            currentMember -= 2;
+
+        currentMember = Mathf.Clamp(currentMember, 0, partyPeleador.peleadores.Count - 1);
+
+        partyScreen.UpdateMemberSelection(currentMember);
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            var selectedMember = partyPeleador.peleadores[currentMember];
+            if(selectedMember.HP <= 0)
+            {
+                partyScreen.SetMessageText("No puede pelear porque esta derrotado");
+                return;
+            }
+            if(selectedMember == playerUnit.Peleadores)
+            {
+                partyScreen.SetMessageText("No se puede cambiar por este");
+                return;
+            }
+            partyScreen.gameObject.SetActive(false);
+            state = BattleState.Busy;
+            StartCoroutine(CambioPeleador(selectedMember));
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            partyScreen.gameObject.SetActive(false);
+            ActionSelection();
+        }
+    }
+
+    IEnumerator CambioPeleador(Peleadores nuevoPeleador)
+    {
+        if (playerUnit.Peleadores.HP > 0)
+        {
+            yield return dialogBox.TypeDialog($"Vuelve {playerUnit.Peleadores.Base.Name}");
+            yield return new WaitForSeconds(2f);
+        }
+
+        playerUnit.Setup(nuevoPeleador);
+        playerHud.SetData(nuevoPeleador);
+        dialogBox.SetMoveNames(nuevoPeleador.Movimientos);
+        yield return dialogBox.TypeDialog($"Encargate {nuevoPeleador.Base.Name}!");
+
+        StartCoroutine(EnemyMove());
     }
 }

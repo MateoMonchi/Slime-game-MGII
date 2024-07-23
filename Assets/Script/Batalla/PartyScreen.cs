@@ -9,6 +9,7 @@ public class PartyScreen : MonoBehaviour
     [SerializeField] Text mensageText;
 
     PartyMemeberUI[] slotMiembros;
+    List<Peleadores> peleadores;
 
     public void Init()
     {
@@ -16,6 +17,8 @@ public class PartyScreen : MonoBehaviour
     }
     public void SetPartyData(List<Peleadores> peleadores)
     {
+        this.peleadores = peleadores;
+
         for(int i = 0; i < slotMiembros.Length; i++) 
         { 
            if(i < peleadores.Count)
@@ -24,5 +27,21 @@ public class PartyScreen : MonoBehaviour
                 slotMiembros[i].gameObject.SetActive(false);
         }
         mensageText.text = "Elige al Peleador";
+    }
+
+    public void UpdateMemberSelection(int selectedMember)
+    {
+        for(int i = 0;i < peleadores.Count;i++)
+        {
+            if (i == selectedMember)
+                slotMiembros[i].SetSelected(true);
+            else
+                slotMiembros[i].SetSelected(false);
+        }
+    }
+
+    public void SetMessageText(string mensage)
+    {
+        mensageText.text = mensage;
     }
 }

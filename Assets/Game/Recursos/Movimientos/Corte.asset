@@ -15,6 +15,6 @@ MonoBehaviour:
   name: Corte
   description: 
   clase: 1
-  poder: 60
+  poder: 55
   precision: 100
   pp: 20
