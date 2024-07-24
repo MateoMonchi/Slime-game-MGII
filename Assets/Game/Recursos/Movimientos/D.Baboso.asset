@@ -18,3 +18,7 @@ MonoBehaviour:
   poder: 60
   precision: 100
   pp: 20
+  categoria: 1
+  effects:
+    boosts: []
+  target: 0

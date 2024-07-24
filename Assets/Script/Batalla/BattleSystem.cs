@@ -100,11 +100,28 @@ public class BattleSystem : MonoBehaviour
         movimiento.PP--;
         yield return dialogBox.TypeDialog($"{sourceUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
         yield return new WaitForSeconds(1f);
-        var damageDetails = targetUnit.Peleadores.TakeDamage(movimiento, sourceUnit.Peleadores);
-        yield return targetUnit.Hud.UpdateHP();
-        yield return ShowDamageDetails(damageDetails);
 
-        if (damageDetails.Perecer)
+        if(movimiento.Base.Categoria == CategoriaMovimientos.Status)
+        {
+            var effects = movimiento.Base.Effects;
+            if(effects.Boosts != null)
+            {
+                if (movimiento.Base.Target == MoveTarget.Self)
+                    sourceUnit.Peleadores.ApplyBoosts(effects.Boosts);
+                else
+                    targetUnit.Peleadores.ApplyBoosts(effects.Boosts);
+            }
+        }
+        else
+        {
+            var damageDetails = targetUnit.Peleadores.TakeDamage(movimiento, sourceUnit.Peleadores);
+            yield return targetUnit.Hud.UpdateHP();
+            yield return ShowDamageDetails(damageDetails);
+
+        }
+
+
+        if (targetUnit.Peleadores.HP <= 0)
         {
             yield return dialogBox.TypeDialog($"{targetUnit.Peleadores.Base.Name} Perecio");
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor.Timeline;
 using UnityEngine;
 
@@ -12,24 +13,24 @@ public class Peleadores
 
     public PeleadoresBase Base
     { get { return _base; } }
-            
+
     public int Level
     {
 
         get { return level; }
     }
 
-    public int HP { get;set; }
+    public int HP { get; set; }
     public List<Movimiento> Movimientos { get; set; }
+    public Dictionary<Stat, int> Stats { get; private set; }
+    public Dictionary<Stat, int> StatsBoosts { get; private set; }
+
 
     public void Init()
     {
-       
-        HP = MaxHp;
-       
         //Genera movimientos
         Movimientos = new List<Movimiento>();
-        foreach(var movimiento in Base.Aprendermovimientos)
+        foreach (var movimiento in Base.Aprendermovimientos)
         {
             if (movimiento.Level <= Level)
                 Movimientos.Add(new Movimiento(movimiento.Base));
@@ -37,30 +38,82 @@ public class Peleadores
             if (Movimientos.Count >= 4)
                 break;
         }
+        CalculateStats();
+        HP = MaxHp;
+
+        StatsBoosts = new Dictionary<Stat, int>()
+        {
+            {Stat.Attack, 0 },
+            {Stat.Defense, 0 },
+            {Stat.MagicAttack, 0 },
+            {Stat.MagicDefense, 0 },
+            {Stat.Speed, 0 },
+        };
     }
+
+    void CalculateStats()
+    {
+        Stats = new Dictionary<Stat, int>();
+        Stats.Add(Stat.Attack, Mathf.FloorToInt((Base.Attack * Level) / 100f) + 5);
+        Stats.Add(Stat.Defense, Mathf.FloorToInt((Base.Defense * Level) / 100f) + 5);
+        Stats.Add(Stat.MagicAttack, Mathf.FloorToInt((Base.MagicAttack * Level) / 100f) + 5);
+        Stats.Add(Stat.MagicDefense, Mathf.FloorToInt((Base.MagicDefense * Level) / 100f) + 5);
+        Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
+
+        MaxHp = Mathf.FloorToInt((Base.Speed * Level) / 100f) + 10;
+    }
+
+    int GetStat(Stat stat)
+    {
+        int statVal = Stats[stat];
+        // aplica el boost de stats
+        int boost = StatsBoosts[stat];
+        var boostValues = new float[] { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f };
+
+        if (boost >= 0)
+        
+            statVal = Mathf.FloorToInt(statVal * boostValues[boost]);
+            else
+            statVal = Mathf.FloorToInt(statVal / boostValues[-boost]);
+        
+
+        return statVal;
+    }
+
+    public void ApplyBoosts(List<StatBoost> statBoosts)
+    {
+        foreach (var statBoost in statBoosts)
+        {
+            var stat = statBoost.stat;
+            var boost = statBoost.boost;
+
+            StatsBoosts[stat] = Mathf.Clamp(StatsBoosts[stat] + boost, -6, 6);
+
+            Debug.Log($"{stat} acaba de buffear {StatsBoosts[stat]}");
+        }
+    }
+
+    public int MaxHp { get; private set;}
     public int Attack
     {
-        get { return Mathf.FloorToInt((Base.Attack * Level) / 100f) + 5; }
+        get { return GetStat(Stat.Attack); }
     }
     public int Defense
     {
-        get { return Mathf.FloorToInt((Base.Defense * Level) / 100f) + 5; }
+        get { return GetStat(Stat.Defense); }
     }
-    public int MaxHp
-    {
-        get { return Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10; }
-    }
+  
     public int MagicAttack
     {
-        get { return Mathf.FloorToInt((Base.MagicAttack * Level) / 100f) + 5; }
+        get { return GetStat(Stat.MagicAttack); }
     }
     public int MagicDefense
     {
-        get { return Mathf.FloorToInt((Base.MagicDefense * Level) / 100f) + 5; }
+        get { return GetStat(Stat.MagicDefense); }
     }
     public int Speed
     {
-        get { return Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5; }
+        get { return GetStat(Stat.Speed); }
     }
     
     public DamageDetails TakeDamage(Movimiento movimiento, Peleadores agresor)
@@ -77,8 +130,9 @@ public class Peleadores
             Critico = critico,
             Perecer = false
         };
-        float ataque = (movimiento.Base.IsSpecial) ? agresor.MagicAttack : agresor.Attack;
-        float defensa = (movimiento.Base.IsSpecial) ? MagicDefense : Defense;
+        float ataque = (movimiento.Base.Categoria == CategoriaMovimientos.Special) ? agresor.MagicAttack : agresor.Attack;
+        float defensa = (movimiento.Base.Categoria == CategoriaMovimientos.Special) ? MagicDefense : Defense;
+
         float modifiers = Random.Range(0.85f, 1f) * Clase * critico;
         float a = (2 * agresor.Level + 10) / 250f;
         float d = a * movimiento.Base.Poder * ((float)ataque / defensa) + 2;

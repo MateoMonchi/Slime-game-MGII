@@ -104,6 +104,16 @@ public enum PeleadorClase
     Maquina,
     Hielo
 }
+
+public enum Stat
+{
+    Attack,
+    Defense,
+    MagicAttack,
+    MagicDefense,
+    Speed
+}
+
 public class ClaseChart
 {
     static float[][] chart =

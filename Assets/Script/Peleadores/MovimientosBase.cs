@@ -13,7 +13,9 @@ public class MovimientosBase : ScriptableObject
     [SerializeField] int poder;
     [SerializeField] int precision;
     [SerializeField] int pp;
-
+    [SerializeField] CategoriaMovimientos categoria;
+    [SerializeField] EffectosMovimientos effects;
+    [SerializeField] MoveTarget target;
 
     public string Name
     {
@@ -40,21 +42,44 @@ public class MovimientosBase : ScriptableObject
         get { return pp; }
     }
 
-    public bool IsSpecial
+    public CategoriaMovimientos Categoria
     {
-        get
-        {
-            if (clase == PeleadorClase.Fuego || clase == PeleadorClase.Viento || clase == PeleadorClase.Agua || clase == PeleadorClase.Rayo)
-            {
-
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
+        get { return categoria;}
     }
+
+    public EffectosMovimientos Effects
+    {
+        get { return effects; }
+    }
+
+    public MoveTarget Target
+    {
+        get { return target; }
+    }
+}
+
+[System.Serializable]
+public class EffectosMovimientos
+{
+    [SerializeField] List<StatBoost> boosts;
+    public List<StatBoost> Boosts
+    {
+        get { return boosts; }
+    }
+}
+[System.Serializable]
+public class StatBoost
+{
+    public Stat stat;
+    public int boost;
+}
+public enum CategoriaMovimientos
+{
+    Physical, Special, Status
+}
+
+public enum MoveTarget
+{
+    Foe, Self
 }
 
