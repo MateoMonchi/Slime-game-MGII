@@ -39,6 +39,7 @@ public class Peleadores
                 break;
         }
         CalculateStats();
+
         HP = MaxHp;
 
         StatsBoosts = new Dictionary<Stat, int>()
@@ -59,8 +60,9 @@ public class Peleadores
         Stats.Add(Stat.MagicAttack, Mathf.FloorToInt((Base.MagicAttack * Level) / 100f) + 5);
         Stats.Add(Stat.MagicDefense, Mathf.FloorToInt((Base.MagicDefense * Level) / 100f) + 5);
         Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
+        
+        MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10;
 
-        MaxHp = Mathf.FloorToInt((Base.Speed * Level) / 100f) + 10;
     }
 
     int GetStat(Stat stat)
@@ -93,7 +95,6 @@ public class Peleadores
         }
     }
 
-    public int MaxHp { get; private set;}
     public int Attack
     {
         get { return GetStat(Stat.Attack); }
@@ -115,7 +116,8 @@ public class Peleadores
     {
         get { return GetStat(Stat.Speed); }
     }
-    
+    public int MaxHp { get; private set; }
+
     public DamageDetails TakeDamage(Movimiento movimiento, Peleadores agresor)
     {
         float critico = 1f;
