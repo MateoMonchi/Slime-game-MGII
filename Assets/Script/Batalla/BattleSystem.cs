@@ -42,12 +42,21 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"Aparecio un {enemyUnit.Peleadores.Base.Name}");
         yield return new WaitForSeconds(1f);
 
-        ActionSelection();
+        ChooseFirstTurn();
+    }
+
+    void ChooseFirstTurn()
+    {
+        if (playerUnit.Peleadores.Speed >= enemyUnit.Peleadores.Speed)
+            ActionSelection();
+        else
+            StartCoroutine(EnemyMove());
     }
 
     void BattleOver(bool won)
     {
         state = BattleState.BattleOver;
+        partyPeleador.peleadores.ForEach(p => p.OnBattleOver());
         OnBattleOver(won);
     }
 
@@ -103,14 +112,7 @@ public class BattleSystem : MonoBehaviour
 
         if(movimiento.Base.Categoria == CategoriaMovimientos.Status)
         {
-            var effects = movimiento.Base.Effects;
-            if(effects.Boosts != null)
-            {
-                if (movimiento.Base.Target == MoveTarget.Self)
-                    sourceUnit.Peleadores.ApplyBoosts(effects.Boosts);
-                else
-                    targetUnit.Peleadores.ApplyBoosts(effects.Boosts);
-            }
+            yield return RunMoveEffects(movimiento, sourceUnit.Peleadores, targetUnit.Peleadores);
         }
         else
         {
@@ -128,6 +130,30 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(2f);
 
             CheckForBattleOver(targetUnit);
+        }
+    }
+
+    IEnumerator RunMoveEffects(Movimiento movimiento, Peleadores source, Peleadores target)
+    {
+        var effects = movimiento.Base.Effects;
+        if (effects.Boosts != null)
+        {
+            if (movimiento.Base.Target == MoveTarget.Self)
+                source.ApplyBoosts(effects.Boosts);
+            else
+                target.ApplyBoosts(effects.Boosts);
+        }
+
+        yield return ShowStatusChanges(source);
+        yield return ShowStatusChanges(target);
+    }
+
+    IEnumerator ShowStatusChanges (Peleadores peleadores)
+    {
+        while (peleadores.StatusChanges.Count > 0)
+        {
+            var message = peleadores.StatusChanges.Dequeue();
+            yield return dialogBox.TypeDialog(message);
         }
     }
 
@@ -277,8 +303,10 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator CambioPeleador(Peleadores nuevoPeleador)
     {
+        bool currentPeleadorPerecio = true;
         if (playerUnit.Peleadores.HP > 0)
         {
+            currentPeleadorPerecio = false;
             yield return dialogBox.TypeDialog($"Vuelve {playerUnit.Peleadores.Base.Name}");
             yield return new WaitForSeconds(2f);
         }
@@ -287,6 +315,9 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(nuevoPeleador.Movimientos);
         yield return dialogBox.TypeDialog($"Encargate {nuevoPeleador.Base.Name}!");
 
-        StartCoroutine(EnemyMove());
+        if (currentPeleadorPerecio)
+            ChooseFirstTurn();
+        else
+            StartCoroutine(EnemyMove());
     }
 }

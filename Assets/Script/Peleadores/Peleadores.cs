@@ -24,7 +24,7 @@ public class Peleadores
     public List<Movimiento> Movimientos { get; set; }
     public Dictionary<Stat, int> Stats { get; private set; }
     public Dictionary<Stat, int> StatsBoosts { get; private set; }
-
+    public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
 
     public void Init()
     {
@@ -42,14 +42,7 @@ public class Peleadores
 
         HP = MaxHp;
 
-        StatsBoosts = new Dictionary<Stat, int>()
-        {
-            {Stat.Attack, 0 },
-            {Stat.Defense, 0 },
-            {Stat.MagicAttack, 0 },
-            {Stat.MagicDefense, 0 },
-            {Stat.Speed, 0 },
-        };
+        ResetStatsBoost();
     }
 
     void CalculateStats()
@@ -63,6 +56,18 @@ public class Peleadores
         
         MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10;
 
+    }
+
+    void ResetStatsBoost()
+    {
+        StatsBoosts = new Dictionary<Stat, int>()
+        {
+            {Stat.Attack, 0 },
+            {Stat.Defense, 0 },
+            {Stat.MagicAttack, 0 },
+            {Stat.MagicDefense, 0 },
+            {Stat.Speed, 0 },
+        };
     }
 
     int GetStat(Stat stat)
@@ -90,6 +95,11 @@ public class Peleadores
             var boost = statBoost.boost;
 
             StatsBoosts[stat] = Mathf.Clamp(StatsBoosts[stat] + boost, -6, 6);
+
+            if (boost > 0)
+                StatusChanges.Enqueue($"{Base.Name}´s {stat} subio!");
+            else
+                StatusChanges.Enqueue($"{Base.Name}´s {stat} bajo!");
 
             Debug.Log($"{stat} acaba de buffear {StatsBoosts[stat]}");
         }
@@ -152,6 +162,10 @@ public class Peleadores
     {
         int r = Random.Range(0, Movimientos.Count);
         return Movimientos[r];
+    }
+    public void OnBattleOver()
+    {
+        ResetStatsBoost();
     }
 }
 public class DamageDetails
