@@ -10,18 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a73609ac55c48494ea3ada2b9c37a7a1, type: 3}
-  m_Name: D.Baboso
+  m_Name: Quemadura Quimica
   m_EditorClassIdentifier: 
-  name: D.Baboso
+  name: Quemadura Quimica
   description: 
-  clase: 3
-  poder: 60
+  clase: 2
+  poder: 70
   precision: 100
   pp: 20
   categoria: 1
   effects:
-    boosts:
-    - stat: 4
-      boost: -1
-    status: 0
+    boosts: []
+    status: 2
   target: 0

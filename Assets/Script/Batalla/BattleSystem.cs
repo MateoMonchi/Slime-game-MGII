@@ -106,6 +106,14 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Movimiento movimiento)
     {
+        bool canRunMove = sourceUnit.Peleadores.OnBeforeMove();
+        if (!canRunMove)
+        {
+            yield return ShowStatusChanges(sourceUnit.Peleadores);
+            yield break;
+        }
+        yield return ShowStatusChanges(sourceUnit.Peleadores);
+
         movimiento.PP--;
         yield return dialogBox.TypeDialog($"{sourceUnit.Peleadores.Base.Name} uso {movimiento.Base.name}");
         yield return new WaitForSeconds(1f);
@@ -131,17 +139,37 @@ public class BattleSystem : MonoBehaviour
 
             CheckForBattleOver(targetUnit);
         }
+
+        sourceUnit.Peleadores.OnAfterTurn();
+        yield return ShowStatusChanges(sourceUnit.Peleadores);
+        yield return sourceUnit.Hud.UpdateHP();
+
+        if (sourceUnit.Peleadores.HP <= 0)
+        {
+            yield return dialogBox.TypeDialog($"{sourceUnit.Peleadores.Base.Name} Perecio");
+
+            yield return new WaitForSeconds(2f);
+
+            CheckForBattleOver(sourceUnit);
+        }
     }
 
     IEnumerator RunMoveEffects(Movimiento movimiento, Peleadores source, Peleadores target)
     {
         var effects = movimiento.Base.Effects;
+
+        //Bufeo de stats
         if (effects.Boosts != null)
         {
             if (movimiento.Base.Target == MoveTarget.Self)
                 source.ApplyBoosts(effects.Boosts);
             else
                 target.ApplyBoosts(effects.Boosts);
+        }
+        //condicion de estado
+        if(effects.Status != CondicionID.none)
+        {
+            target.SetStatus(effects.Status);
         }
 
         yield return ShowStatusChanges(source);

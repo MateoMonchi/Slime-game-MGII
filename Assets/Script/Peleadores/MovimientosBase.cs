@@ -62,9 +62,14 @@ public class MovimientosBase : ScriptableObject
 public class EffectosMovimientos
 {
     [SerializeField] List<StatBoost> boosts;
+    [SerializeField] CondicionID status;
     public List<StatBoost> Boosts
     {
         get { return boosts; }
+    }
+    public CondicionID Status
+    {
+        get { return status; }
     }
 }
 [System.Serializable]

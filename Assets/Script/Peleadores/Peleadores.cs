@@ -25,6 +25,8 @@ public class Peleadores
     public Dictionary<Stat, int> Stats { get; private set; }
     public Dictionary<Stat, int> StatsBoosts { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+    public Condicion Status { get; private set; }
+    public bool HpChanged { get; set; }
 
     public void Init()
     {
@@ -150,19 +152,42 @@ public class Peleadores
         float d = a * movimiento.Base.Poder * ((float)ataque / defensa) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
 
-        HP -= damage;
-        if(HP <= 0)
-        {
-            HP = 0;
-            damageDetails.Perecer = true;
-        }
+        UpdateHP(damage);
         return damageDetails;
     }
+
+    public void UpdateHP(int damage)
+    {
+        HP = Mathf.Clamp(HP - damage, 0, MaxHp);
+        HpChanged = true;
+    }
+
+    public void SetStatus(CondicionID condicionId)
+    {
+        Status = ConditionDB.Condiciones[condicionId];
+        StatusChanges.Enqueue($"{Base.Name} {Status.StartMessage}");
+    }
+
     public Movimiento GetRandomMove()
     {
         int r = Random.Range(0, Movimientos.Count);
         return Movimientos[r];
     }
+
+    public bool OnBeforeMove()
+    {
+        if(Status?.OneBeforeMove != null)
+        {
+            return Status.OneBeforeMove(this);
+        }
+        return true;
+    }
+
+    public void OnAfterTurn()
+    {
+        Status?.OnAfterTurn?.Invoke(this);
+    }
+
     public void OnBattleOver()
     {
         ResetStatsBoost();

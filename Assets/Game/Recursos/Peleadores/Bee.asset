@@ -21,9 +21,11 @@ MonoBehaviour:
   maxHp: 26
   attack: 49
   defense: 25
-  magicAttack: 0
-  magicDefense: 0
+  magicAttack: 10
+  magicDefense: 20
   speed: 70
   aprenderMovimientos:
   - movimientosBase: {fileID: 11400000, guid: bba253c8bc29390459b47d250aa987f1, type: 2}
     level: 1
+  - movimientosBase: {fileID: 11400000, guid: 3e7c6a66a83443d4485e842ada8f2487, type: 2}
+    level: 3

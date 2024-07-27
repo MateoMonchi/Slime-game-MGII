@@ -15,6 +15,11 @@ MonoBehaviour:
   name: Picotazo
   description: 
   clase: 6
-  poder: 50
+  poder: 40
   precision: 100
   pp: 20
+  categoria: 0
+  effects:
+    boosts: []
+    status: 0
+  target: 0

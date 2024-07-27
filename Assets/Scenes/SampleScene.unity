@@ -1438,9 +1438,9 @@ MonoBehaviour:
   - _base: {fileID: 11400000, guid: defe404029055ae43925668ad5e4baf4, type: 2}
     level: 3
   - _base: {fileID: 11400000, guid: 234746604bb7e1740a62a30447bac4d2, type: 2}
-    level: 5
-  - _base: {fileID: 11400000, guid: f34c4339091254347a6e670a2288cde4, type: 2}
     level: 4
+  - _base: {fileID: 11400000, guid: f34c4339091254347a6e670a2288cde4, type: 2}
+    level: 5
 --- !u!1001 &1026865558
 PrefabInstance:
   m_ObjectHideFlags: 0
