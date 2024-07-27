@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class ConditionDB 
 {
+    public static void Init()
+    {
+        foreach (var kvp in Condiciones)
+        {
+            var condicionId = kvp.Key;
+            var condition = kvp.Value;
+
+            condition.Id = condicionId;
+        }
+    } 
     public static Dictionary<CondicionID, Condicion> Condiciones { get; set; } = new Dictionary<CondicionID, Condicion>()
     {
         {

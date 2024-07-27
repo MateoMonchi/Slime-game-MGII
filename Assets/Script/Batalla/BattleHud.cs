@@ -7,10 +7,13 @@ public class BattleHud : MonoBehaviour
 {
     [SerializeField] Text nameText;
     [SerializeField] Text levelText;
+    [SerializeField] Text statusText;
     [SerializeField] HpBar HPBar;
 
+    [SerializeField] Color psnColor;
+
     Peleadores _peleadores;
-    
+    Dictionary<CondicionID, Color> statusColors;
 
     public void SetData(Peleadores peleadores)
     {
@@ -19,7 +22,29 @@ public class BattleHud : MonoBehaviour
         nameText.text = peleadores.Base.Name;
         levelText.text = "Lv" + peleadores.Level;
         HPBar.SetHp((float) peleadores.HP/peleadores.MaxHp);
+
+        statusColors = new Dictionary<CondicionID, Color>() 
+        {
+            {CondicionID.psn, psnColor},
+        };
+
+        SetStatusText();
+        _peleadores.OnStatusChanged += SetStatusText;
     }
+
+    void SetStatusText()
+    {
+        if(_peleadores.Status == null)
+        {
+            statusText.text = "";
+        }
+        else
+        {
+            statusText.text = _peleadores.Status.Id.ToString().ToUpper();
+            statusText.color = statusColors[_peleadores.Status.Id];
+        }
+    }
+
     public IEnumerator UpdateHP()
     {
         if (_peleadores.HpChanged)

@@ -26,7 +26,11 @@ public class Peleadores
     public Dictionary<Stat, int> StatsBoosts { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
     public Condicion Status { get; private set; }
+    public int StatusTime { get; set; }
+    public Condicion VolatileStatus { get; private set; }
+    public int VolatileStatusTime { get; set; }
     public bool HpChanged { get; set; }
+    public event System.Action OnStatusChanged;
 
     public void Init()
     {
@@ -56,7 +60,7 @@ public class Peleadores
         Stats.Add(Stat.MagicDefense, Mathf.FloorToInt((Base.MagicDefense * Level) / 100f) + 5);
         Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
         
-        MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10;
+        MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10 + Level;
 
     }
 
@@ -164,8 +168,16 @@ public class Peleadores
 
     public void SetStatus(CondicionID condicionId)
     {
+        if (Status != null) return;
         Status = ConditionDB.Condiciones[condicionId];
         StatusChanges.Enqueue($"{Base.Name} {Status.StartMessage}");
+        OnStatusChanged?.Invoke();
+    }
+
+    public void CureStatus()
+    {
+        Status = null;
+        OnStatusChanged?.Invoke();
     }
 
     public Movimiento GetRandomMove()

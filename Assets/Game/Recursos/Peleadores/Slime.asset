@@ -25,7 +25,7 @@ MonoBehaviour:
   magicDefense: 65
   speed: 40
   aprenderMovimientos:
-  - movimientosBase: {fileID: 11400000, guid: fb0c73f12587a5b4fb0a792139a047b9, type: 2}
+  - movimientosBase: {fileID: 11400000, guid: 083a54ec431ad1240bdd5a5ed969019d, type: 2}
     level: 1
   - movimientosBase: {fileID: 11400000, guid: f310338186ab4f144929cd52e157b7e8, type: 2}
     level: 7
