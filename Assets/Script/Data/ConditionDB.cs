@@ -29,7 +29,7 @@ public class ConditionDB
                 }
             }
         },
-       /* {
+        {
            CondicionID.brn, 
             new Condicion()
             {
@@ -41,7 +41,7 @@ public class ConditionDB
                     peleadores.StatusChanges.Enqueue($"{peleadores.Base.Name} sufre por la quemadura");
                 }
             }
-        },
+        },/*
         {
             CondicionID.brn, 
             new Condicion()

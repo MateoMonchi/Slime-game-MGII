@@ -343,6 +343,7 @@ MonoBehaviour:
   statusText: {fileID: 46565798372369216}
   HPBar: {fileID: 792304028126280463}
   psnColor: {r: 0.8352942, g: 0.20392159, b: 0.654902, a: 1}
+  brnColor: {r: 1, g: 0.52382886, b: 0.007843137, a: 1}
 --- !u!1 &7484119063471600309
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,22 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a73609ac55c48494ea3ada2b9c37a7a1, type: 3}
-  m_Name: Quemadura Quimica
+  m_Name: QuemaAlmas
   m_EditorClassIdentifier: 
-  name: Quemadura Quimica
+  name: Quema Almas
   description: 
   clase: 2
-  poder: 60
-  precision: 100
+  poder: 0
+  precision: 70
   alwaysHits: 0
   pp: 20
-  categoria: 1
+  categoria: 2
   effects:
     boosts: []
-    status: 0
-  secundarios:
-  - boosts: []
     status: 2
-    chance: 50
-    target: 0
+  secundarios: []
   target: 0

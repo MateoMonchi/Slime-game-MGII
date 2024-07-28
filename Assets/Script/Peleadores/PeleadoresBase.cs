@@ -111,7 +111,10 @@ public enum Stat
     Defense,
     MagicAttack,
     MagicDefense,
-    Speed
+    Speed,
+
+    Precision,
+    Evasion
 }
 
 public class ClaseChart

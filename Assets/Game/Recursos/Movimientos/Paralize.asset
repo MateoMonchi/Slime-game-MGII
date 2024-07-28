@@ -16,10 +16,12 @@ MonoBehaviour:
   description: 
   clase: 4
   poder: 0
-  precision: 100
+  precision: 90
+  alwaysHits: 0
   pp: 20
   categoria: 2
   effects:
     boosts: []
     status: 3
+  secundarios: []
   target: 0

@@ -12,9 +12,11 @@ public class MovimientosBase : ScriptableObject
     [SerializeField] PeleadorClase clase;
     [SerializeField] int poder;
     [SerializeField] int precision;
+    [SerializeField] bool alwaysHits;
     [SerializeField] int pp;
     [SerializeField] CategoriaMovimientos categoria;
     [SerializeField] EffectosMovimientos effects;
+    [SerializeField] List<EffectosSecundarios> secundarios;
     [SerializeField] MoveTarget target;
 
     public string Name
@@ -33,6 +35,10 @@ public class MovimientosBase : ScriptableObject
     {
         get { return precision; }
     }
+    public bool AlwaysHits
+    {
+        get { return alwaysHits; }
+    }
     public int Poder
     {
         get { return poder; }
@@ -50,6 +56,11 @@ public class MovimientosBase : ScriptableObject
     public EffectosMovimientos Effects
     {
         get { return effects; }
+    }
+
+    public List<EffectosSecundarios> Secundarios
+    {
+        get { return secundarios; }
     }
 
     public MoveTarget Target
@@ -72,6 +83,23 @@ public class EffectosMovimientos
         get { return status; }
     }
 }
+
+[System.Serializable]
+public class EffectosSecundarios : EffectosMovimientos
+{
+    [SerializeField] int chance;
+    [SerializeField] MoveTarget target;
+
+    public int Chance
+    {
+        get { return chance; }
+    }
+    public MoveTarget Target
+    {
+        get { return target; }
+    }
+}
+
 [System.Serializable]
 public class StatBoost
 {

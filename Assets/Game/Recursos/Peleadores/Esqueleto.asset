@@ -29,3 +29,5 @@ MonoBehaviour:
     level: 1
   - movimientosBase: {fileID: 11400000, guid: 8e79e9aff6af0654f9ea77277c37fffd, type: 2}
     level: 5
+  - movimientosBase: {fileID: 11400000, guid: de2dbb706240a1f4eb78d5fe4d090808, type: 2}
+    level: 5

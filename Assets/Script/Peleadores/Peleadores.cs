@@ -22,6 +22,7 @@ public class Peleadores
 
     public int HP { get; set; }
     public List<Movimiento> Movimientos { get; set; }
+    public Movimiento CurrentMove { get; set; }
     public Dictionary<Stat, int> Stats { get; private set; }
     public Dictionary<Stat, int> StatsBoosts { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
@@ -73,6 +74,8 @@ public class Peleadores
             {Stat.MagicAttack, 0 },
             {Stat.MagicDefense, 0 },
             {Stat.Speed, 0 },
+            {Stat.Precision, 0 },
+            {Stat.Evasion, 0 },
         };
     }
 

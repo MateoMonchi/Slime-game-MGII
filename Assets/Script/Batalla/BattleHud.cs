@@ -11,6 +11,7 @@ public class BattleHud : MonoBehaviour
     [SerializeField] HpBar HPBar;
 
     [SerializeField] Color psnColor;
+    [SerializeField] Color brnColor;
 
     Peleadores _peleadores;
     Dictionary<CondicionID, Color> statusColors;
@@ -26,6 +27,7 @@ public class BattleHud : MonoBehaviour
         statusColors = new Dictionary<CondicionID, Color>() 
         {
             {CondicionID.psn, psnColor},
+             {CondicionID.brn, brnColor},
         };
 
         SetStatusText();

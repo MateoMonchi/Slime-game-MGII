@@ -17,9 +17,11 @@ MonoBehaviour:
   clase: 8
   poder: 60
   precision: 100
+  alwaysHits: 0
   pp: 20
   categoria: 0
   effects:
     boosts: []
-    status: 4
+    status: 0
+  secundarios: []
   target: 0
