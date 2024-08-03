@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73609ac55c48494ea3ada2b9c37a7a1, type: 3}
   m_Name: GolpeDestello
   m_EditorClassIdentifier: 
-  name: 
+  name: Golpe Destello
   description: 
-  clase: 0
-  poder: 0
-  precision: 0
+  clase: 4
+  poder: 40
+  precision: 100
   alwaysHits: 0
-  pp: 0
-  prioridad: 0
+  pp: 20
+  prioridad: 1
   categoria: 0
   effects:
     boosts: []

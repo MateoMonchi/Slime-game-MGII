@@ -19,6 +19,7 @@ MonoBehaviour:
   precision: 100
   alwaysHits: 0
   pp: 20
+  prioridad: 0
   categoria: 1
   effects:
     boosts:
