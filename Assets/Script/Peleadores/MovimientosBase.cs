@@ -14,6 +14,7 @@ public class MovimientosBase : ScriptableObject
     [SerializeField] int precision;
     [SerializeField] bool alwaysHits;
     [SerializeField] int pp;
+    [SerializeField] int prioridad;
     [SerializeField] CategoriaMovimientos categoria;
     [SerializeField] EffectosMovimientos effects;
     [SerializeField] List<EffectosSecundarios> secundarios;
@@ -46,6 +47,11 @@ public class MovimientosBase : ScriptableObject
     public int PP
     {
         get { return pp; }
+    }
+
+    public int Prioridad
+    {
+        get { return prioridad; }
     }
 
     public CategoriaMovimientos Categoria

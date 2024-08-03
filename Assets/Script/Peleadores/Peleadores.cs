@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEditor.Timeline;
 using UnityEngine;
 
@@ -185,8 +186,10 @@ public class Peleadores
 
     public Movimiento GetRandomMove()
     {
-        int r = Random.Range(0, Movimientos.Count);
-        return Movimientos[r];
+        var moveWithPP = Movimientos.Where(x => x.PP > 0).ToList();
+
+        int r = Random.Range(0, moveWithPP.Count);
+        return moveWithPP[r];
     }
 
     public bool OnBeforeMove()
