@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affb8970926ae8145bcb5d0b56febb7c, type: 3}
+  m_Name: Kurupi
+  m_EditorClassIdentifier: 
+  name: Kurupi
+  description: 
+  frontSprite: {fileID: 185963631, guid: ab399fa9a0252ec498e8d09938b87b2f, type: 3}
+  backSprite: {fileID: 562908174, guid: ab399fa9a0252ec498e8d09938b87b2f, type: 3}
+  clase1: 5
+  clase2: 0
+  maxHp: 80
+  attack: 100
+  defense: 76
+  magicAttack: 65
+  magicDefense: 82
+  speed: 56
+  aprenderMovimientos:
+  - movimientosBase: {fileID: 11400000, guid: fb0c73f12587a5b4fb0a792139a047b9, type: 2}
+    level: 1
+  - movimientosBase: {fileID: 11400000, guid: 02f3837557832af4397239efd5afcfd5, type: 2}
+    level: 4
+  - movimientosBase: {fileID: 11400000, guid: 3b8bd43a1993a2b4a87c9ca7f9f8af18, type: 2}
+    level: 2
+  - movimientosBase: {fileID: 11400000, guid: 0a223dfcc5fbf5e4d97a94041402ff8f, type: 2}
+    level: 2
+  - movimientosBase: {fileID: 11400000, guid: d149fc083d8326f44a8f317e4e5caa90, type: 2}
+    level: 3
+  - movimientosBase: {fileID: 11400000, guid: 07db22537ab7d23439d77d8b7b9300bd, type: 2}
+    level: 8
+  - movimientosBase: {fileID: 11400000, guid: d4914b27e3585a740bcc5b948b25084f, type: 2}
+    level: 7

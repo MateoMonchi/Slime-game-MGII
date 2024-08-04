@@ -18,12 +18,22 @@ MonoBehaviour:
   backSprite: {fileID: -983554714, guid: 2bbf875ef895d1f4abd16c6c0c8428c5, type: 3}
   clase1: 5
   clase2: 6
-  maxHp: 35
-  attack: 41
-  defense: 30
+  maxHp: 48
+  attack: 68
+  defense: 50
   magicAttack: 25
-  magicDefense: 30
+  magicDefense: 45
   speed: 25
   aprenderMovimientos:
   - movimientosBase: {fileID: 11400000, guid: 33a32d28cac66a34ea4ae7fe524dab54, type: 2}
-    level: 5
+    level: 6
+  - movimientosBase: {fileID: 11400000, guid: 8a560587d596b7344b2ff0f93c8f2d76, type: 2}
+    level: 11
+  - movimientosBase: {fileID: 11400000, guid: 02f3837557832af4397239efd5afcfd5, type: 2}
+    level: 4
+  - movimientosBase: {fileID: 11400000, guid: 3b8bd43a1993a2b4a87c9ca7f9f8af18, type: 2}
+    level: 2
+  - movimientosBase: {fileID: 11400000, guid: 0a223dfcc5fbf5e4d97a94041402ff8f, type: 2}
+    level: 2
+  - movimientosBase: {fileID: 11400000, guid: fb0c73f12587a5b4fb0a792139a047b9, type: 2}
+    level: 1

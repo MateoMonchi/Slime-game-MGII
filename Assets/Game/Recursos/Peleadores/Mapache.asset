@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affb8970926ae8145bcb5d0b56febb7c, type: 3}
+  m_Name: Mapache
+  m_EditorClassIdentifier: 
+  name: GolDRacoon
+  description: 
+  frontSprite: {fileID: -355777679, guid: 96d8d2cf5934e344eb17c60a20706f41, type: 3}
+  backSprite: {fileID: 436390558, guid: 96d8d2cf5934e344eb17c60a20706f41, type: 3}
+  clase1: 1
+  clase2: 0
+  maxHp: 73
+  attack: 90
+  defense: 62
+  magicAttack: 78
+  magicDefense: 65
+  speed: 95
+  aprenderMovimientos:
+  - movimientosBase: {fileID: 11400000, guid: 846473171fa8aa741b862fadb3c9c865, type: 2}
+    level: 7
+  - movimientosBase: {fileID: 11400000, guid: 4f2187c16dd0ca144a00038168508544, type: 2}
+    level: 5
+  - movimientosBase: {fileID: 11400000, guid: 07db22537ab7d23439d77d8b7b9300bd, type: 2}
+    level: 8
+  - movimientosBase: {fileID: 11400000, guid: 15c4fcce5a4e3c24d935631228e6cef4, type: 2}
+    level: 1
+  - movimientosBase: {fileID: 11400000, guid: 3b8bd43a1993a2b4a87c9ca7f9f8af18, type: 2}
+    level: 2
+  - movimientosBase: {fileID: 11400000, guid: 0a223dfcc5fbf5e4d97a94041402ff8f, type: 2}
+    level: 3
+  - movimientosBase: {fileID: 11400000, guid: a12b3fc45d9cbf8498e6ea985e0eab73, type: 2}
+    level: 11
