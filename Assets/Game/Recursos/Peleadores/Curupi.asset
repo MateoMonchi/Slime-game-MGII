@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affb8970926ae8145bcb5d0b56febb7c, type: 3}
+  m_Name: Curupi
+  m_EditorClassIdentifier: 
+  name: Curupi
+  description: 
+  frontSprite: {fileID: 185963631, guid: ab399fa9a0252ec498e8d09938b87b2f, type: 3}
+  backSprite: {fileID: 562908174, guid: ab399fa9a0252ec498e8d09938b87b2f, type: 3}
+  clase1: 5
+  clase2: 0
+  maxHp: 43
+  attack: 60
+  defense: 48
+  magicAttack: 50
+  magicDefense: 60
+  speed: 38
+  aprenderMovimientos: []

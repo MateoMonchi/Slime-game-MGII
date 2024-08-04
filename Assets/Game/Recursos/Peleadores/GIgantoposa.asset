@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affb8970926ae8145bcb5d0b56febb7c, type: 3}
+  m_Name: GIgantoposa
+  m_EditorClassIdentifier: 
+  name: Gigantopaso
+  description: 
+  frontSprite: {fileID: -335007858, guid: 946b79d7e322a00418d927835256582e, type: 3}
+  backSprite: {fileID: -568512570, guid: 946b79d7e322a00418d927835256582e, type: 3}
+  clase1: 2
+  clase2: 6
+  maxHp: 40
+  attack: 45
+  defense: 35
+  magicAttack: 55
+  magicDefense: 39
+  speed: 45
+  aprenderMovimientos:
+  - movimientosBase: {fileID: 11400000, guid: d4914b27e3585a740bcc5b948b25084f, type: 2}
+    level: 5
+  - movimientosBase: {fileID: 11400000, guid: 33a32d28cac66a34ea4ae7fe524dab54, type: 2}
+    level: 3
+  - movimientosBase: {fileID: 11400000, guid: 6d3dd054774725e43b2371c3ab1a4ce0, type: 2}
+    level: 4
+  - movimientosBase: {fileID: 11400000, guid: c7210e73ac18e8645a02fcf0d7d50136, type: 2}
+    level: 1

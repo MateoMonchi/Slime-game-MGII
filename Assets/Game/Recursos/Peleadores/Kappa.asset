@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affb8970926ae8145bcb5d0b56febb7c, type: 3}
+  m_Name: Kappa
+  m_EditorClassIdentifier: 
+  name: Kappa
+  description: 
+  frontSprite: {fileID: -10277216, guid: 6d28505b233cdbe40bd12d78c03cf557, type: 3}
+  backSprite: {fileID: 2030508452, guid: 6d28505b233cdbe40bd12d78c03cf557, type: 3}
+  clase1: 3
+  clase2: 0
+  maxHp: 45
+  attack: 40
+  defense: 40
+  magicAttack: 60
+  magicDefense: 60
+  speed: 45
+  aprenderMovimientos:
+  - movimientosBase: {fileID: 11400000, guid: fb0c73f12587a5b4fb0a792139a047b9, type: 2}
+    level: 1
