@@ -298,7 +298,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
     {
         if (damageDetails.Critico > 1f)
-            yield return dialogBox.TypeDialog("Black Flash");
+            yield return dialogBox.TypeDialog("Realizo un critico");
         if (damageDetails.EfectividadesDeClases > 1f)
             yield return dialogBox.TypeDialog("Pego SuperEfectivo");
         else if (damageDetails.EfectividadesDeClases < 1f)

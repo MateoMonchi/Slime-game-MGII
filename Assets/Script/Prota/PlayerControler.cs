@@ -6,7 +6,9 @@ using UnityEngine;
 public class PlayerControler : MonoBehaviour
 {
     public LayerMask SolidObjectsLayer;
-    public LayerMask LongGrassLayer;
+    public LayerMask InteractuableLayer;
+    public LayerMask LongGrassLayer; 
+
     public float moveSpeed = 5f;
     public event Action OnEncountered;
     private bool isMoving;
@@ -28,6 +30,21 @@ public class PlayerControler : MonoBehaviour
                 StartCoroutine(Move(targetPos));
             }
         }
+        if (Input.GetKeyDown(KeyCode.Z))
+            Interact();
+    }
+
+    void Interact()
+    {
+        var interactPos = transform.position;
+
+        //Debug.DrawLine(transform.position, interactPos, Color.green, 0.5f);
+
+        var collider = Physics2D.OverlapCircle(interactPos, 0.3f, InteractuableLayer);
+        if(collider != null)
+        {
+            collider.GetComponent<Interactable>()?.Interact();
+        }
     }
 
     IEnumerator Move(Vector3 targetPos)
@@ -44,7 +61,7 @@ public class PlayerControler : MonoBehaviour
     }
     private bool IsWalkAble(Vector3 targetPos)
     {
-        if(Physics2D.OverlapCircle(targetPos,0.2f, SolidObjectsLayer) != null)
+        if(Physics2D.OverlapCircle(targetPos,0.2f, SolidObjectsLayer | InteractuableLayer) != null)
         {
             return false;
         }
