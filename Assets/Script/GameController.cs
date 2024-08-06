@@ -1,16 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Dialog}
+public enum GameState { FreeRoam, Battle, Dialog }
+
 public class GameController : MonoBehaviour
 {
-    [SerializeField] PlayerControler playerController;
-    [SerializeField] BattleSystem battleSystem;
-    [SerializeField] Camera worldCamera;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private BattleSystem battleSystem;
+    [SerializeField] private Camera worldCamera;
 
-    GameState state;
+    private GameState state;
 
     private void Awake()
     {
@@ -22,18 +22,27 @@ public class GameController : MonoBehaviour
         playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
 
+        playerController.OnEnterTrainersView += (Collider2D trainerCollider) =>
+        {
+            var trainer = trainerCollider.GetComponentInParent<TrainerController>();
+            if(trainer != null)
+            {
+                StartCoroutine(trainer.TriggerTrainerBattle(playerController));
+            }
+        };
+
         DialogManager.Instance.OnShowDialog += () =>
         {
             state = GameState.Dialog;
         };
         DialogManager.Instance.OnCloseDialog += () =>
         {
-            if(state == GameState.Dialog)
-            state = GameState.FreeRoam;
+            if (state == GameState.Dialog)
+                state = GameState.FreeRoam;
         };
     }
 
-    void StartBattle()
+    private void StartBattle()
     {
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
@@ -45,7 +54,7 @@ public class GameController : MonoBehaviour
         battleSystem.StartBattle(partyPeleadores, peleadoresMalos);
     }
 
-    void EndBattle(bool ganar)
+    private void EndBattle(bool ganar)
     {
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
@@ -54,18 +63,17 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-      if (state == GameState.FreeRoam)
+        switch (state)
         {
-            playerController.HandleUpdate();
-        }
-      else if (state == GameState.Battle)
-        {
-            battleSystem.HandleUpdate();
-        }
-      else if (state == GameState.Dialog)
-        {
-            DialogManager.Instance.HandleUpdate();
+            case GameState.FreeRoam:
+                playerController.HandleUpdate();
+                break;
+            case GameState.Battle:
+                battleSystem.HandleUpdate();
+                break;
+            case GameState.Dialog:
+                DialogManager.Instance.HandleUpdate();
+                break;
         }
     }
-    
 }
