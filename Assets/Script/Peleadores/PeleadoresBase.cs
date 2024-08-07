@@ -22,7 +22,24 @@ public class PeleadoresBase : ScriptableObject
     [SerializeField] int magicAttack;
     [SerializeField] int magicDefense;
     [SerializeField] int speed;
+
+    [SerializeField] int expYield;
+    [SerializeField] GrowthRate growthRate;
+
     [SerializeField] List<AprenderMovimientos> aprenderMovimientos;
+
+    public int GetExpForLevel(int level)
+    {
+        if(growthRate == GrowthRate.Rapido)
+        {
+            return 4 * (level * level * level) / 5;
+        }
+        else if (growthRate == GrowthRate.MedioRapido)
+        {
+            return level * level * level    ;
+        }
+        return -1;
+    }
     public string Name
     {
         get { return name; }
@@ -75,6 +92,9 @@ public class PeleadoresBase : ScriptableObject
     {
         get { return aprenderMovimientos; }
     }
+    public int ExpYield => expYield;
+
+    public GrowthRate GrowthRate => growthRate;
 }
 [System.Serializable]
 
@@ -103,6 +123,11 @@ public enum PeleadorClase
     Viento,
     Maquina,
     Hielo
+}
+
+public enum GrowthRate
+{
+    Rapido, MedioRapido
 }
 
 public enum Stat

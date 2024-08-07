@@ -34,7 +34,8 @@ public class NPCcontroller : MonoBehaviour, Interactable
     }
     private void Update()
     {
-        if(state == NPCState.Idle)
+            
+        if (state == NPCState.Idle)
         {
             idleTimer += Time.deltaTime;
             if(idleTimer > timeBetweenPattern) 

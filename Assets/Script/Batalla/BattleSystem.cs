@@ -203,11 +203,7 @@ public class BattleSystem : MonoBehaviour
 
             if (targetUnit.Peleadores.HP <= 0)
             {
-                yield return dialogBox.TypeDialog($"{targetUnit.Peleadores.Base.Name} Perecio");
-
-                yield return new WaitForSeconds(2f);
-
-                CheckForBattleOver(targetUnit);
+                yield return HandlePeleadorDerrotado(targetUnit);
             }
         }
         else
@@ -247,11 +243,8 @@ public class BattleSystem : MonoBehaviour
 
         if (sourceUnit.Peleadores.HP <= 0)
         {
-            yield return dialogBox.TypeDialog($"{sourceUnit.Peleadores.Base.Name} Perecio");
-
-            yield return new WaitForSeconds(2f);
-
-            CheckForBattleOver(sourceUnit);
+            yield return HandlePeleadorDerrotado(sourceUnit);
+            yield return new WaitUntil(() => state == BattleState.RunningTurn);
         }
     }
 
@@ -287,6 +280,38 @@ public class BattleSystem : MonoBehaviour
             var message = peleadores.StatusChanges.Dequeue();
             yield return dialogBox.TypeDialog(message);
         }
+    }
+
+    IEnumerator HandlePeleadorDerrotado(BattleUnit derrotaUnit)
+    {
+        yield return dialogBox.TypeDialog($"{derrotaUnit.Peleadores.Base.Name} Perecio");
+
+        yield return new WaitForSeconds(2f);
+
+        if (!derrotaUnit.IsPlayerUnit)
+        {
+            // exp ganada
+            int expYield = derrotaUnit.Peleadores.Base.ExpYield;
+            int enemyLevel = derrotaUnit.Peleadores.Level;
+
+            int expGain = Mathf.FloorToInt((expYield * enemyLevel) / 7);
+            playerUnit.Peleadores.Exp += expGain;
+            yield return dialogBox.TypeDialog($"{playerUnit.Peleadores.Base.Name} gano {expGain} experiencia");
+            yield return playerUnit.Hud.SetExpSmooth();
+
+            //revisa si subiste de nivel 
+            while (playerUnit.Peleadores.CheckForLevelUp())
+            {
+                playerUnit.Hud.SetLevel();
+                yield return dialogBox.TypeDialog($"{playerUnit.Peleadores.Base.Name} subio al nivel {playerUnit.Peleadores.Level}");
+
+                yield return playerUnit.Hud.SetExpSmooth(true);
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        CheckForBattleOver(derrotaUnit);
     }
 
     void CheckForBattleOver(BattleUnit faintedUnit)

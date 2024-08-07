@@ -24,6 +24,8 @@ MonoBehaviour:
   magicAttack: 60
   magicDefense: 100
   speed: 85
+  expYield: 81
+  growthRate: 1
   aprenderMovimientos:
   - movimientosBase: {fileID: 11400000, guid: fb0c73f12587a5b4fb0a792139a047b9, type: 2}
     level: 1

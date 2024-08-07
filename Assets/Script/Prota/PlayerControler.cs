@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public event Action OnEncountered;
     public event Action<Collider2D> OnEnterTrainersView;
 
+    const float offsetY = 0.3f;
+
     private Vector2 input;
     private Character character;
 
@@ -57,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForEncounters()
     {
-        if (Physics2D.OverlapCircle(transform.position, 0.2f, GameLayer.Instance.GrassLayer) != null)
+        if (Physics2D.OverlapCircle(transform.position - new Vector3(0, offsetY), 0.2f, GameLayer.Instance.GrassLayer) != null)
         {
             if (UnityEngine.Random.Range(1, 101) <= 10)
             {

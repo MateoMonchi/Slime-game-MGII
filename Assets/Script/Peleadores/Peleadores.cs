@@ -21,6 +21,7 @@ public class Peleadores
         get { return level; }
     }
 
+    public int Exp { get; set; }
     public int HP { get; set; }
     public List<Movimiento> Movimientos { get; set; }
     public Movimiento CurrentMove { get; set; }
@@ -46,6 +47,9 @@ public class Peleadores
             if (Movimientos.Count >= 4)
                 break;
         }
+
+        Exp = Base.GetExpForLevel(Level);
+
         CalculateStats();
 
         HP = MaxHp;
@@ -61,7 +65,7 @@ public class Peleadores
         Stats.Add(Stat.MagicAttack, Mathf.FloorToInt((Base.MagicAttack * Level) / 100f) + 5);
         Stats.Add(Stat.MagicDefense, Mathf.FloorToInt((Base.MagicDefense * Level) / 100f) + 5);
         Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
-        
+
         MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10 + Level;
 
     }
@@ -88,11 +92,11 @@ public class Peleadores
         var boostValues = new float[] { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f };
 
         if (boost >= 0)
-        
+
             statVal = Mathf.FloorToInt(statVal * boostValues[boost]);
-            else
+        else
             statVal = Mathf.FloorToInt(statVal / boostValues[-boost]);
-        
+
 
         return statVal;
     }
@@ -113,6 +117,16 @@ public class Peleadores
 
             Debug.Log($"{stat} acaba de buffear {StatsBoosts[stat]}");
         }
+    } 
+
+    public bool CheckForLevelUp()
+    {
+        if(Exp > Base.GetExpForLevel(level + 1))
+        {
+            ++level;
+            return true;
+        }
+        return false;
     }
 
     public int Attack
