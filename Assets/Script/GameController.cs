@@ -31,11 +31,11 @@ public class GameController : MonoBehaviour
             }
         };
 
-        DialogManager.Instance.OnShowDialog += () =>
+        DialogManager.i.OnShowDialog += () =>
         {
             state = GameState.Dialog;
         };
-        DialogManager.Instance.OnCloseDialog += () =>
+        DialogManager.i.OnCloseDialog += () =>
         {
             if (state == GameState.Dialog)
                 state = GameState.FreeRoam;
@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour
                 battleSystem.HandleUpdate();
                 break;
             case GameState.Dialog:
-                DialogManager.Instance.HandleUpdate();
+                DialogManager.i.HandleUpdate();
                 break;
         }
     }

@@ -25,7 +25,7 @@ public class TrainerController : MonoBehaviour
 
         yield return character.Move(moveVec);
 
-        DialogManager.Instance.ShowDialog(dialog, () =>
+        DialogManager.i.ShowDialog(dialog, () =>
         {
             Debug.Log("Iniciando Pelea con Entrenador");
         });
