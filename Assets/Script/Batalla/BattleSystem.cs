@@ -22,6 +22,8 @@ public class BattleSystem : MonoBehaviour
     int currentMove;
     int currentMember;
 
+    int escapeAttempts;
+
     PartyPeleadores partyPeleador;
     Peleadores peleadorMalo;
 
@@ -44,6 +46,7 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"Aparecio un {enemyUnit.Peleadores.Base.Name}");
         yield return new WaitForSeconds(1f);
 
+        escapeAttempts = 0;
         ActionSelection();
     }
 
@@ -122,6 +125,11 @@ public class BattleSystem : MonoBehaviour
                 state = BattleState.Busy;
                 yield return CambioPeleador(selectedPeleador);
             }
+            else if (playerAction == BattleAction.Run)
+            {
+                yield return TryToEscape();
+            }
+
             //Enemy Turn
             var enemyMove = enemyUnit.Peleadores.GetRandomMove();
             yield return RunMove(enemyUnit, playerUnit, enemyMove);
@@ -356,6 +364,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 3)
             {
                 //Correr
+                StartCoroutine(RunTurns(BattleAction.Run));
             }
         }
     }
@@ -451,5 +460,34 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"Encargate {nuevoPeleador.Base.Name}!");
 
         state = BattleState.RunningTurn;
+    }
+    IEnumerator TryToEscape()
+    {
+        state = BattleState.Busy;
+
+        ++escapeAttempts;
+
+        int playerSpeed = playerUnit.Peleadores.Speed;
+        int enemySpeed = enemyUnit.Peleadores.Speed;
+        if(enemySpeed < playerSpeed)
+        {
+            yield return dialogBox.TypeDialog($"Espacaste a salvo");
+            BattleOver(true);
+        }
+        else
+        {
+            float f = (playerSpeed *128) / enemySpeed + 30 * escapeAttempts;
+            f = f % 256;
+            if(UnityEngine.Random.Range(0, 256) < f)
+            {
+                yield return dialogBox.TypeDialog($"Espacaste a salvo");
+                BattleOver(true);
+            }
+            else
+            {
+                yield return dialogBox.TypeDialog($"No pudiste escapar");
+                state = BattleState.RunningTurn;
+            }
+        }
     }
 }

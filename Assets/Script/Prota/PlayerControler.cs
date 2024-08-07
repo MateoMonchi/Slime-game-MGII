@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
             HandleMovementInput();
             if (input != Vector2.zero)
             {
-                StartCoroutine(character.Move(input, OnMoveOver));
+                StartCoroutine(character.Move(input, CheckForEncounters));
             }
         }
 
@@ -54,11 +54,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnMoveOver()
-    {
-        CheckForEncounters();
-        CheckIfInTrainersView();
-    }
 
     private void CheckForEncounters()
     {
@@ -70,13 +65,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    private void CheckIfInTrainersView()
-    {
-        var collider = Physics2D.OverlapCircle(transform.position, 0.2f, GameLayer.Instance.GrassLayer);
-        if (collider != null)
-        {
-            OnEnterTrainersView?.Invoke(collider);
-        }
-    }
+   
 }
 
